@@ -76,6 +76,38 @@ bool iterate()
 	return progress;
 }
 
+bool go_over_pivots(const vector<std::pair<int,int>> &pivots, int idx)
+{
+	if (idx == pivots.size())
+	{
+		print_table();
+		return true;
+	}
+	std::pair<int,int> idxs = pivots[idx];
+	int i = idxs.first, j = idxs.second;
+	for (auto num : table[i][j])
+	{
+		if (!violates(num, i, j))
+		{
+			vector<int> old = table[i][j];
+			table[i][j] = singleton(num);
+			go_over_pivots(pivots, idx+1);
+			table[i][j] = old;
+		}
+	}
+}
+
+void solve_rec()
+{
+	vector<std::pair<int,int>> pivots;
+	for (int i = 0; i < 9; i++)
+		for (int j = 0; j < 9; j++)
+			if (table[i][j].size() > 1)
+				pivots.push_back(std::pair<int,int> {i, j});
+
+	go_over_pivots(pivots, 0);
+}
+
 int main()
 {
 	for (int i = 0; i < 9; i++)
@@ -94,4 +126,6 @@ int main()
 		cout << ++i << ". move\n";
 		print_table();
 	}
+	// backtrack
+	solve_rec();
 }
