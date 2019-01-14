@@ -7,7 +7,6 @@
 using std::vector;
 using std::cout;
 using std::endl;
-using std::cin;
 
 vector<int> table[9][9];
 
@@ -35,7 +34,7 @@ bool iterate()
 
 bool go_over_pivots(const vector<std::pair<int,int>> &pivots, int idx)
 {
-	// reached the end
+  // reached the end
   if (idx == pivots.size())
     return true;
   std::pair<int,int> idxs = pivots[idx];
@@ -53,7 +52,7 @@ bool go_over_pivots(const vector<std::pair<int,int>> &pivots, int idx)
         table[i][j] = old;
     }
   }
-	return false;
+  return false;
 }
 
 bool solve_rec()
@@ -69,20 +68,22 @@ bool solve_rec()
 
 int main(int argc, char **argv)
 {
-	handle_io(argc, argv);
-	cout << "Trying simple rule based moves..." << endl;
+  handle_io(argc, argv);
+
+  cout << "Trying simple rule based moves..." << endl;
   int i = 0;
   while (iterate())
     i++;
-	cout << "Simple moves exhausted. " << i
-		<< " moves could be made." << endl
-		<< "Attempting to solve by backtracking..." << endl;
+  cout << "Simple moves exhausted. " << i
+    << " moves could be made." << endl
+    << "Attempting to solve by backtracking..." << endl;
+
   // backtrack
   if (solve_rec())
-	{
-		cout << "Solution found:" << endl << endl;
-		print_table();
-	}
-	else
-		cout << "No solution exists." << endl;
+  {
+    cout << "Solution found:" << endl << endl;
+    print_table();
+  }
+  else
+    cout << "No solution exists." << endl;
 }
