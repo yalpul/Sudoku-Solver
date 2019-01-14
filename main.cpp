@@ -130,12 +130,13 @@ int main()
       else
         table[i][j] = fullset();
   }
+	cout << "Trying simple rule based moves..." << endl;
   int i = 0;
   while (iterate())
-  {
-    cout << ++i << ". move\n";
-    print_table();
-  }
+    i++;
+	cout << "Simple moves exhausted. " << i
+		<< " moves could be made." << endl
+		<< "Attempting to solve by backtracking..." << endl;
   // backtrack
   solve_rec();
 }
