@@ -24,13 +24,20 @@ void print_table()
 {
 	for (int i = 0; i < 9; i++)
 	{
+    if (i > 0 && i % 3 == 0)
+      cout << "---------------" << endl;
 		for (int j = 0; j < 9; j++)
+    {
+      if (j > 0 && j % 3 == 0)
+        cout << " | ";
 			if (table[i][j].size() == 1)
 				cout << table[i][j][0];
 			else
-				cout << "L";
+				cout << "0";
+    }
 		cout << endl;
 	}
+  cout << endl;
 }
 
 // return true if placing <num> on <i>th row and
@@ -85,14 +92,17 @@ bool go_over_pivots(const vector<std::pair<int,int>> &pivots, int idx)
 	}
 	std::pair<int,int> idxs = pivots[idx];
 	int i = idxs.first, j = idxs.second;
-	for (auto num : table[i][j])
+	for (int num_i = 0; num_i < table[i][j].size(); num_i++)
 	{
-		if (!violates(num, i, j))
+    int num = table[i][j][num_i];
+		if (!violates(i, j, num))
 		{
 			vector<int> old = table[i][j];
 			table[i][j] = singleton(num);
-			go_over_pivots(pivots, idx+1);
-			table[i][j] = old;
+			if (go_over_pivots(pivots, idx+1))
+        return true;
+      else
+        table[i][j] = old;
 		}
 	}
 }
