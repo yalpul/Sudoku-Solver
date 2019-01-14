@@ -59,20 +59,21 @@ bool violates(int i, int j, int num)
 // false if not
 bool iterate()
 {
-	bool finished = true;
+	bool progress = false;
 	for (int i = 0; i < 9; i++)
 		for (int j = 0; j < 9; j++)
 		{
 			if (table[i][j].size() == 1)
 				continue;
-			finished = false;
 			vector<int> newlist;
 			for (auto num : table[i][j])
 				if (!violates(i, j, num))
 					newlist.push_back(num);
+			if (newlist != table[i][j])
+				progress = true;
 			table[i][j] = newlist;
 		}
-	return finished;
+	return progress;
 }
 
 int main()
@@ -82,13 +83,15 @@ int main()
 		std::string line;
 		cin >> line;
 		for (int j = 0; j < 9; j++)
-			if (line[j] != '_')
+			if (line[j] != '0')
 				table[i][j] = singleton(line[j] - '0');
 			else
 				table[i][j] = fullset();
 	}
 	int i = 0;
-	while (!iterate())
+	while (iterate())
+	{
 		cout << ++i << ". move\n";
-	print_table();
+		print_table();
+	}
 }
