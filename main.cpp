@@ -71,12 +71,17 @@ int main(int argc, char **argv)
   handle_io(argc, argv);
 
   cout << "Trying simple rule based moves..." << endl;
-  int i = 0;
+  int i = -1;
   while (iterate())
     i++;
-  cout << "Simple moves exhausted. " << i
-    << " moves could be made." << endl
-    << "Attempting to solve by backtracking..." << endl;
+  if (i == 0)
+    cout << "Simple moves didn't help." << endl;
+  else
+  {
+    cout << "Simple moves exhausted. " << i
+      << " move(s) could be made." << endl;
+  }
+  cout << "Attempting to solve by backtracking..." << endl;
 
   // backtrack
   if (solve_rec())
