@@ -85,11 +85,9 @@ bool iterate()
 
 bool go_over_pivots(const vector<std::pair<int,int>> &pivots, int idx)
 {
+	// reached the end
   if (idx == pivots.size())
-  {
-    print_table();
     return true;
-  }
   std::pair<int,int> idxs = pivots[idx];
   int i = idxs.first, j = idxs.second;
   for (int num_i = 0; num_i < table[i][j].size(); num_i++)
@@ -105,9 +103,10 @@ bool go_over_pivots(const vector<std::pair<int,int>> &pivots, int idx)
         table[i][j] = old;
     }
   }
+	return false;
 }
 
-void solve_rec()
+bool solve_rec()
 {
   vector<std::pair<int,int>> pivots;
   for (int i = 0; i < 9; i++)
@@ -115,7 +114,7 @@ void solve_rec()
       if (table[i][j].size() > 1)
         pivots.push_back(std::pair<int,int> {i, j});
 
-  go_over_pivots(pivots, 0);
+  return go_over_pivots(pivots, 0);
 }
 
 int main()
@@ -138,5 +137,11 @@ int main()
 		<< " moves could be made." << endl
 		<< "Attempting to solve by backtracking..." << endl;
   // backtrack
-  solve_rec();
+  if (solve_rec())
+	{
+		cout << "Solution found:" << endl << endl;
+		print_table();
+	}
+	else
+		cout << "No solution exists." << endl;
 }
