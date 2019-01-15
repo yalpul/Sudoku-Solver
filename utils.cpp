@@ -35,3 +35,12 @@ bool violates(int i, int j, int num)
         return true;
   return false;
 }
+
+bool is_solved()
+{
+  for (int i = 0; i < 9; i++)
+    for (int j = 0; j < 9; j++)
+      if (table[i][j].size() > 1)
+        return false;
+  return true;
+}

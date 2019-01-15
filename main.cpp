@@ -11,7 +11,7 @@ using std::endl;
 vector<int> table[9][9];
 
 // one full pass with the current table state
-// returns true if solving is finished and
+// returns true if there is any progress
 // false if not
 bool iterate()
 {
@@ -80,6 +80,12 @@ int main(int argc, char **argv)
   {
     cout << "Simple moves exhausted. " << i
       << " move(s) could be made." << endl;
+  }
+  if (is_solved())
+  {
+    cout << "Solution found:" << endl << endl;
+    print_table();
+    return 0;
   }
   cout << "Attempting to solve by backtracking..." << endl;
 
